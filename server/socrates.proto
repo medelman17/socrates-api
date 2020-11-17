@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "github.com/medelman17/socrates/server/pb";
+
+message SocratesRequest {
+  string passage = 1;
+  repeated string questions = 2;
+}
+
+message SocratesAnswer {
+  string question = 1;
+  string answer = 2;
+}
+
+message SocratesResponse {
+   repeated SocratesAnswer answers = 1;
+}
+
+service Socrates {
+  rpc Ask(SocratesRequest) returns (SocratesResponse) {}
+}

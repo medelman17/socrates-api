@@ -4,11 +4,12 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"socrates/pb"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
-	"socrates/pb"
 )
 
 var (
@@ -69,13 +70,12 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	route := gin.Default()
 	config := cors.DefaultConfig()
-	config.AllowOriginFunc = func(origin string) bool {
-		return origin == "http://localhost:3000"
-	}
+
+	config.AllowAllOrigins = true
 
 	route.Use(cors.New(config))
 
+	route.Use(static.Serve("/client", static.LocalFile("./client/build", true)))
 	route.POST("/mrc", handleAsk)
-	route.Use(static.Serve("/", static.LocalFile("./client/build", true)))
 	route.Run(apiLocation)
 }

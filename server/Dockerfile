@@ -36,8 +36,8 @@ RUN apk add --update --no-cache libstdc++ \
 RUN apk --no-cache add --virtual .scm git npm yarn
 
 ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux
+  CGO_ENABLED=0 \
+  GOOS=linux
 
 WORKDIR /build
 
@@ -71,7 +71,7 @@ RUN mkdir client
 
 # Copy binary from build to main folder
 RUN cp /build/main .
-RUN cp -r /build/client ./client
+RUN cp -r /build/client .
 
 
 EXPOSE 8080

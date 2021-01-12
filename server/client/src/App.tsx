@@ -13,7 +13,7 @@ const defaultQuestions =
   "Where is the respondent from?\nWhat did the immigration judge find?\nWhat did the respondent's first attorney do?\nWhat did the respondent's second attorney do?\nWhich court of appeals?\nWhen was respondent's first appeal dismissed?";
 
 const postQuestion = async (vars: { questions: string[]; passage: string }) => {
-  const res = await fetch("http://localhost:8080/mrc", {
+  const res = await fetch("https://bs.eoir.cc/socrates/mrc", {
     headers: {
       "Content-Type": "application/json",
     },

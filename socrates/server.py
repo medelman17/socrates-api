@@ -1,28 +1,23 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
-from allennlp_models.pretrained import get_pretrained_models, get_tasks, load_predictor
-
+from allennlp_models.pretrained import load_predictor
 
 import grpc
 
 from socrates_pb2 import SocratesRequest, SocratesResponse
 from socrates_pb2_grpc import SocratesServicer, add_SocratesServicer_to_server
 
-
 class SocratesServer(SocratesServicer):
     def __init__(self):
         self.predictor = load_predictor('rc-bidaf')
 
     def Ask(self, request, context):
-
         answers = []
         for question in request.questions:
             result = self.predictor.predict(passage=request.passage, question=question)
             answers.append({"question": question, "answer": result["best_span_str"]})
-
         resp = SocratesResponse(answers=answers)
         return resp
-
 
 if __name__ == '__main__':
     import argparse

@@ -43,17 +43,16 @@ WORKDIR /build
 
 ## Build Client
 
-
-WORKDIR /build/client
-COPY ./client/package.json package.json
-RUN yarn install
-COPY ./client/tsconfig.json tsconfig.json
-COPY ./client/src src
-COPY ./client/public public
-RUN yarn build
-
-
-WORKDIR /build
+#WORKDIR /build/client
+#COPY ./client/package.json package.json
+#RUN yarn install
+#COPY ./client/tsconfig.json tsconfig.json
+#COPY ./client/src src
+#COPY ./client/public public
+#RUN yarn build
+#
+#
+#WORKDIR /build
 
 RUN go get -u github.com/golang/protobuf/protoc-gen-go
 
@@ -71,9 +70,9 @@ RUN mkdir client
 
 # Copy binary from build to main folder
 RUN cp /build/main .
-RUN cp -r /build/client .
+#RUN cp -r /build/client .
 
 
 EXPOSE 8080
 
-CMD ["/dist/main", "--server","127.0.0.1:9999"]
+CMD ["/dist/main", "--server","socrates:9999"]

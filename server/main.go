@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"socrates/pb"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
@@ -69,13 +69,14 @@ func handleAsk(c *gin.Context) {
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	route := gin.Default()
+
 	config := cors.DefaultConfig()
 
 	config.AllowAllOrigins = true
 
 	route.Use(cors.New(config))
 
-	route.Use(static.Serve("/client", static.LocalFile("./client/build", true)))
+	route.Use(static.Serve("/", static.LocalFile("./client/build", true)))
 	route.POST("/mrc", handleAsk)
 	route.Run(apiLocation)
 }
